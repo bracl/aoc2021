@@ -12,7 +12,7 @@ curl --location --request GET "$URL" --header "Cookie: session=$SESSION" -o "$OU
 echo "Happy Solving :)"
 
 DESTINATION="/Users/bradleyking/dev/aoc2021/src/main/scala/solutions/day$DAY.scala"
-cp "/Users/bradleyking/dev/aoc2021/src/main/scala/utils/template.scala" $DESTINATION
+cp "/Users/bradleyking/dev/aoc2021/src/main/scala/utils/template" $DESTINATION
 sed -i.bak s/DAY/$DAY/g $DESTINATION
 sed -i.bak s/utils$/solutions/g $DESTINATION
 rm $DESTINATION.bak
