@@ -6,7 +6,7 @@ object IO {
 
   def readFile(filename: String): List[String] = {
     val bufferedSource = io.Source.fromFile(filename)
-    val lines = (for (line <- bufferedSource.getLines()) yield line).toList
+    val lines = (for (line <- bufferedSource.getLines()) yield line.trim).toList
     bufferedSource.close
     lines
   }
