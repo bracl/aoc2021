@@ -4,17 +4,17 @@ import utils.IO.{readFile, readInts}
 
 object day9 extends App {
 
-  val caveFloor = readFile(9).map(_.split("").toList.map(_.toInt))
+  val caveFloor: Vector[Vector[Int]] = readFile(9).map(_.split("").toVector.map(_.toInt)).toVector
 
-  val testFloor = List(
+  val testFloor = Vector(
     "2199943210",
     "3987894921",
     "9856789892",
     "8767896789",
     "9899965678"
-  ).map(_.split("").toList.map(_.toInt))
+  ).map(_.split("").toVector.map(_.toInt))
 
-  def safeLookup(value: List[List[Int]], tuple: (Int, Int)): Option[Int] = {
+  def safeLookup(value: Vector[Vector[Int]], tuple: (Int, Int)): Option[Int] = {
     if (0 <= tuple._2 && tuple._2 < value.length)
       if (0 <= tuple._1 && tuple._1 < value(tuple._2).length)
         return Some(value(tuple._2)(tuple._1))
@@ -26,7 +26,7 @@ object day9 extends App {
       case (x, y) => (coord._1 + x, coord._2 + y)
     })
 
-  def checkAdjacent(ll: List[List[Int]], coord: (Int, Int)): Option[Int] = {
+  def checkAdjacent(ll: Vector[Vector[Int]], coord: (Int, Int)): Option[Int] = {
 
     val currentValue = ll(coord._2)(coord._1)
 
@@ -42,7 +42,7 @@ object day9 extends App {
     else None
   }
 
-  def findLowPoints(floor: List[List[Int]]) = {
+  def findLowPoints(floor: Vector[Vector[Int]]) = {
     val comp = for {
       j <- floor.indices
       i <- floor.head.indices
@@ -59,7 +59,7 @@ object day9 extends App {
     (lowPointCoords, riskLevel)
   }
 
-  def getNonNineNeighbours(ll: List[List[Int]], coord: (Int, Int), basin: List[(Int, Int)]): List[(Int, Int)] = {
+  def getNonNineNeighbours(ll: Vector[Vector[Int]], coord: (Int, Int), basin: List[(Int, Int)]): List[(Int, Int)] = {
     if (basin.contains(coord)) println("Ive been here before....")
 
     val tempBasin =
@@ -91,7 +91,7 @@ object day9 extends App {
     newBasin
   }
 
-  def findBasins(floor: List[List[Int]], lowPoints: List[(Int, Int)]) = {
+  def findBasins(floor: Vector[Vector[Int]], lowPoints: List[(Int, Int)]) = {
     val basins = lowPoints.map({
       case (i, j) => getNonNineNeighbours(floor, (i, j), List.empty[(Int, Int)])
     })
