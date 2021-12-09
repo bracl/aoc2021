@@ -60,16 +60,10 @@ object day9 extends App {
   }
 
   def getNonNineNeighbours(ll: List[List[Int]], coord: (Int, Int), basin: List[(Int, Int)]): List[(Int, Int)] = {
-    println(s"visiting coord $coord, basin is currently ${basin.length}")
-
     if (basin.contains(coord)) println("Ive been here before....")
-
-//    val currentValue = ll(coord._2)(coord._1)
-//    assert(currentValue != 9)
 
     val tempBasin =
       if (!basin.contains(coord))
-//      println("Adding coord to basin")
         coord :: basin
       else basin
 
@@ -78,16 +72,14 @@ object day9 extends App {
 
     val toVisit = surroundingVals
       .filter(
-        _._1.nonEmpty
+        _._1.nonEmpty // this is the case where the coord is off the map
       )
       .filter(
-        !_._1.contains(9)
+        !_._1.contains(9) // this is where we've hit the edge of the basin
       )
       .filterNot({
-        case (a, b) => tempBasin.contains((a, b))
+        case (a, b) => tempBasin.contains((a, b)) // this is where we've already been to the proposed coordinate
       })
-
-    println(s"Going to visit: ${toVisit.map(_._2).mkString(", ")}")
 
     val newBasin: List[(Int, Int)] = toVisit.foldLeft(tempBasin)({
       case (b, (Some(x), (i, j))) =>
@@ -112,8 +104,6 @@ object day9 extends App {
   val basins = findBasins(caveFloor, lowPoints._1.toList)
 
   val areas = basins.sortBy(_.length).takeRight(3).foldLeft(1)((i, l) => i * l.length)
-
-  println(basins)
   println(s"part2: $areas")
 
 }
