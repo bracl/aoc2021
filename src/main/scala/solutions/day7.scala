@@ -8,15 +8,16 @@ object day7 extends App {
 
   println(crabPositions)
 
-  def accurateFuelCost(from:Int, to:Int): Int = {
+  def accurateFuelCost(from: Int, to: Int): Int = {
     val abs = math.abs(from - to)
-    (abs*(abs+1))/2
+    (abs * (abs + 1)) / 2
   }
 
-  def minFuelCost(positions: List[Int]): Int = (1 to positions.max).map({i => (i, positions.map(cp => math.abs(cp - i)).sum)}).minBy(_._2)._2
+  def minFuelCost(positions: List[Int]): Int =
+    (1 to positions.max).map(i => (i, positions.map(cp => math.abs(cp - i)).sum)).minBy(_._2)._2
 
-  def minAccurateFuelCost(positions:List[Int]): Int = (1 to positions.max).map({i => (i, positions.map(cp => accurateFuelCost(cp, i)).sum)}).minBy(_._2)._2
-
+  def minAccurateFuelCost(positions: List[Int]): Int =
+    (1 to positions.max).map(i => (i, positions.map(cp => accurateFuelCost(cp, i)).sum)).minBy(_._2)._2
 
   val part1 = minFuelCost(crabPositions)
   val part2 = minAccurateFuelCost(crabPositions)

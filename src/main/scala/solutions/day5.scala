@@ -17,10 +17,12 @@ object day5 extends App {
 
   def parseLine(s: String): List[Coord] = {
     val parts: List[String] = s.split(" -> ").toList
-    parts.flatMap(s => s.split(", ").toList.map({ s =>
-      val startEnd = s.split(",")
-      (startEnd(0).toInt, startEnd(1).toInt)
-    }))
+    parts.flatMap(s =>
+      s.split(", ").toList.map { s =>
+        val startEnd = s.split(",")
+        (startEnd(0).toInt, startEnd(1).toInt)
+      }
+    )
   }
 
   def filterHorizontalVertical(c: Line): Boolean = {
@@ -29,17 +31,17 @@ object day5 extends App {
     start._1 == end._1 || start._2 == end._2
   }
 
-  def addCoords(a: Coord, b:Coord, howManyTimes:Int): Coord = {
-    (a._1+b._1*howManyTimes, a._2+b._2*howManyTimes)
-  }
+  def addCoords(a: Coord, b: Coord, howManyTimes: Int): Coord =
+    (a._1 + b._1 * howManyTimes, a._2 + b._2 * howManyTimes)
 
   def allCoordsOnDiagonalLine(line: Line): List[Coord] = {
     val (start, end) = (line._1, line._2)
 
-    val direction = if (start._1 < end._1 && start._2 < end._2) (1,1)
-    else if (start._1 < end._1 && start._2 > end._2) (1,-1)
-    else if (start._1 > end._1 && start._2 < end._2) (-1,1)
-    else (-1, -1)
+    val direction =
+      if (start._1 < end._1 && start._2 < end._2) (1, 1)
+      else if (start._1 < end._1 && start._2 > end._2) (1, -1)
+      else if (start._1 > end._1 && start._2 < end._2) (-1, 1)
+      else (-1, -1)
 
     val step = math.abs(start._1 - end._1)
     val step2 = math.abs(start._2 - end._2)
@@ -64,10 +66,9 @@ object day5 extends App {
     a.toList
   }
 
-  def allCoordsOnLine(line:Line): List[Coord] = {
+  def allCoordsOnLine(line: Line): List[Coord] =
     if (filterHorizontalVertical(line)) allCoordsOnStraightLine(line)
     else allCoordsOnDiagonalLine(line)
-  }
 
   val allLines: List[Line] = lines.map(parseLine).map(splitLine)
   val straightLines: List[Line] = allLines.filter(filterHorizontalVertical)

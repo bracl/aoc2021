@@ -12,7 +12,7 @@ object day1 extends App {
   }
 
   def part2() = {
-    val windows: Seq[Int] = measurements.sliding(3).filter(_.length==3).map(l => l.sum).toSeq
+    val windows: Seq[Int] = measurements.sliding(3).filter(_.length == 3).map(l => l.sum).toSeq
     part1(windows)
   }
 

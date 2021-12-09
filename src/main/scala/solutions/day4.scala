@@ -27,9 +27,8 @@ object day4 extends App {
     "10 16 15  9 19",
     "18  8 23 26 20",
     "22 11 13  6  5",
-    "2  0 12  3  7",
+    "2  0 12  3  7"
   )
-
 
   val numbers: List[Int] = xxx.head.split(",").map(_.toInt).toList
   val rest = xxx.tail.filter(_.nonEmpty)
@@ -52,16 +51,14 @@ object day4 extends App {
   }
 
   case class Board(numbers: List[Int], uncalledSum: Int = 0, calledIndexes: List[Int]) extends BoardMethods {
+
     override def winner(lastCalledNumber: Int, quiet: Boolean = true): Boolean = {
-      val bool = winningIndexes.exists(wi =>
-        wi.forall(calledIndexes.contains)
-      )
-      if (bool) {
+      val bool = winningIndexes.exists(wi => wi.forall(calledIndexes.contains))
+      if (bool)
         if (!quiet) {
           println(s"Board won:: $lastCalledNumber * $uncalledSum}")
           println(s"Board won:: ${lastCalledNumber * uncalledSum}")
         }
-      }
       bool
     }
   }
@@ -78,15 +75,16 @@ object day4 extends App {
       val newCalledIndexes = b.calledIndexes :+ index
       //      println(s"Number $i found at position $index : total indexes found: $newCalledIndexes")
       Board(b.numbers, newUncalled, newCalledIndexes)
-    }
-    else b
+    } else b
   }
 
-  val boards = rest.sliding(5, 5).map(l => {
-    val lists = l.mkString(" ").split("\\s+").toList //.grouped(5).toList
-    inputToBoard(lists)
-  }).toList
-
+  val boards = rest
+    .sliding(5, 5)
+    .map { l =>
+      val lists = l.mkString(" ").split("\\s+").toList //.grouped(5).toList
+      inputToBoard(lists)
+    }
+    .toList
 
   def playGameToWin(boards: List[Board], numbers: List[Int], winner: Boolean): Boolean = {
 
@@ -100,9 +98,8 @@ object day4 extends App {
         println("\n\nFirst Board")
         newBoards.find(b => b.winner(numberDrawn)).map(b => b.winner(numberDrawn, quiet = false))
         true
-      } else {
+      } else
         loop(newBoards, numbers.tail, winner = false)
-      }
     }
 
     loop(boards, numbers, winner = false)
@@ -123,9 +120,8 @@ object day4 extends App {
         println("\n\nLast Board")
         newBoards.head.winner(numberDrawn, quiet = false)
         true
-      } else {
+      } else
         loop(filtered, numbers.tail, winner = false)
-      }
     }
 
     loop(boards, numbers, winner = false)

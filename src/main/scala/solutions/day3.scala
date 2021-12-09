@@ -9,14 +9,15 @@ object day3 extends App {
   def mostCommonBit(in: List[String]): Seq[String] = {
     val transpose = in.map(_.toList).transpose
     val max = transpose.head.length
-    val mostCommon = transpose.map(l => {
+    val mostCommon = transpose.map { l =>
       val ones = l.count(_ == '1').toFloat
       if (ones < (max / 2.0)) "0" else "1"
-    })
+    }
     mostCommon
   }
 
-  def flip(s: String): String = s match {
+  def flip(s: String): String =
+    s match {
       case "0" => "1"
       case "1" => "0"
     }
@@ -42,9 +43,9 @@ object day3 extends App {
       val mcb = if (most) mcbb(index) else flip(mcbb(index))
       val filtered = in.filter(s => s(index).toString == mcb)
       val foundValue = filtered match {
-        case ll::Nil => ll
+        case ll :: Nil        => ll
         case ll: List[String] => loop(ll, index + 1)
-        case Nil => "Somethings gone wrong"
+        case Nil              => "Somethings gone wrong"
       }
       foundValue
     }

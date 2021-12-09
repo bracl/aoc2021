@@ -13,30 +13,35 @@ object day6 extends App {
   }
 
   case class LanternFish(daysToExpire: Int) extends Fish {
-    def day(): List[LanternFish] = daysToExpire match {
-      case 0 => List(LanternFish(6), LanternFish(8))
-      case _ => List(LanternFish(daysToExpire - 1))
-    }
+
+    def day(): List[LanternFish] =
+      daysToExpire match {
+        case 0 => List(LanternFish(6), LanternFish(8))
+        case _ => List(LanternFish(daysToExpire - 1))
+      }
   }
 
   def playGame(fish: List[LanternFish], daysLeft: Int) = {
 
     @tailrec
-    def loop(fish: List[LanternFish], daysLeft: Int): List[LanternFish] = {
+    def loop(fish: List[LanternFish], daysLeft: Int): List[LanternFish] =
       daysLeft match {
         case 0 => fish
         case _ =>
           val newFish = fish.flatMap(f => f.day())
           loop(newFish, daysLeft - 1)
       }
-    }
 
     loop(fish, daysLeft)
   }
 
-  def betterFishToNumber(bf: (Double, Double, Double, Double, Double, Double, Double, Double, Double)): Double = bf.productIterator.toList.map(_.asInstanceOf[Double]).sum
+  def betterFishToNumber(bf: (Double, Double, Double, Double, Double, Double, Double, Double, Double)): Double =
+    bf.productIterator.toList.map(_.asInstanceOf[Double]).sum
 
-  def playGameBetter(initAges: List[Int], daysLeft: Int): (Double, Double, Double, Double, Double, Double, Double, Double, Double) = {
+  def playGameBetter(
+    initAges: List[Int],
+    daysLeft: Int
+  ): (Double, Double, Double, Double, Double, Double, Double, Double, Double) = {
 
     val zero = initAges.count(_ == 0)
     val one = initAges.count(_ == 1)
@@ -49,7 +54,18 @@ object day6 extends App {
     val eight = initAges.count(_ == 8)
 
     @tailrec
-    def loop(zero: Double, one: Double, two: Double, three: Double, four: Double, five: Double, six: Double, seven: Double, eight: Double, daysLeft: Double): (Double, Double, Double, Double, Double, Double, Double, Double, Double) = {
+    def loop(
+      zero: Double,
+      one: Double,
+      two: Double,
+      three: Double,
+      four: Double,
+      five: Double,
+      six: Double,
+      seven: Double,
+      eight: Double,
+      daysLeft: Double
+    ): (Double, Double, Double, Double, Double, Double, Double, Double, Double) =
       daysLeft match {
         case 0 => (zero, one, two, three, four, five, six, seven, eight)
         case _ =>
@@ -67,7 +83,6 @@ object day6 extends App {
           //          println(betterFishToNumber(a))
           loop(nextZero, nextOne, nextTwo, nextThree, nextFour, nextFive, nextSix, nextSeven, nextEight, daysLeft - 1)
       }
-    }
 
     loop(zero, one, two, three, four, five, six, seven, eight, daysLeft)
   }
@@ -85,13 +100,14 @@ object day6 extends App {
   val betterTwoFiveSixDayFish = playGameBetter(initAges, 256)
   println(String.format("256 Days: %.0f", betterFishToNumber(betterTwoFiveSixDayFish)))
 
-
   val foldingFish = (1 to 80).foldLeft(initialFish)((f, _) => f.flatMap(_.day()))
   println(foldingFish.length)
 
-  val foldingInts = (1 to 80).foldLeft(initAges)((f, _) => f.flatMap({
-    case 0 => List(6, 8)
-    case a => List(a - 1)
-  }))
+  val foldingInts = (1 to 80).foldLeft(initAges)((f, _) =>
+    f.flatMap({
+      case 0 => List(6, 8)
+      case a => List(a - 1)
+    })
+  )
   println(foldingInts.length)
 }
