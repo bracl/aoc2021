@@ -6,6 +6,10 @@ object day9 extends App {
 
   val caveFloor: Vector[Vector[Int]] = readFile(9).map(_.split("").toVector.map(_.toInt)).toVector
 
+  val tomsCaveFloor: Vector[Vector[Int]] = readFile("/Users/bradleyking/dev/aoc2021/src/main/scala/input/9_tom.txt")
+    .map(_.split("").toVector.map(_.toInt))
+    .toVector
+
   val testFloor = Vector(
     "2199943210",
     "3987894921",
@@ -98,10 +102,10 @@ object day9 extends App {
     basins
   }
 
-  val lowPoints = findLowPoints(caveFloor)
+  val lowPoints = findLowPoints(tomsCaveFloor)
 
   println(s"part1: ${lowPoints._2}")
-  val basins = findBasins(caveFloor, lowPoints._1.toList)
+  val basins = findBasins(tomsCaveFloor, lowPoints._1.toList)
 
   val areas = basins.sortBy(_.length).takeRight(3).foldLeft(1)((i, l) => i * l.length)
   println(s"part2: $areas")
