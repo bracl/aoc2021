@@ -2,13 +2,11 @@ package solutions
 
 import utils.IO.readFile
 
-import scala.annotation.tailrec
-
 object day12 extends App {
 
   type Cave = Map[String, List[String]]
 
-  def caveFromInput(lines: List[String]) =
+  def caveFromInput(lines: List[String]): Map[String, List[String]] =
     lines
       .map(_.split("-"))
       .flatMap(l => List((l.head, l.last), (l.last, l.head)))
@@ -51,29 +49,22 @@ object day12 extends App {
     possibleMoves.filterNot(_ == "start").map(n => s"$path$caveSeparator$n").toSet
   }
 
-  def findPathsPart1(cave: Cave, startPaths: Set[String] = Set("start")) = {
+  def findPaths(
+    cave: Cave,
+    startPaths: Set[String] = Set("start"),
+    func: (String, Cave) => Set[String]
+  ): Set[String] = {
 
     def loop(cave: Cave, paths: Set[String]): Set[String] =
       paths.flatMap({
         case x if x.split(caveSeparator).last == "end" => Set(x)
-        case x                                         => loop(cave, availableMoves(x, cave))
+        case x                                         => loop(cave, func(x, cave))
       })
 
     loop(cave, startPaths)
   }
 
-  def findPathsPart2(cave: Cave, startPaths: Set[String] = Set("start")) = {
-
-    def loop(cave: Cave, paths: Set[String]): Set[String] =
-      paths.flatMap({
-        case x if x.split(caveSeparator).last == "end" => Set(x)
-        case x                                         => loop(cave, availableMovesPart2(x, cave))
-      })
-
-    loop(cave, startPaths)
-  }
-
-  println(1, findPathsPart1(cave).size)
-  println(2, findPathsPart2(cave).size)
+  println(1, findPaths(cave, func = availableMoves).size)
+  println(2, findPaths(cave, func = availableMovesPart2).size)
 
 }
