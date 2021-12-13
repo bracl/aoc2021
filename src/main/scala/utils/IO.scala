@@ -18,4 +18,10 @@ object IO {
     strings.map(s => s.toInt)
   }
 
+  def updateMatrix[T](mat: List[List[T]], i: Int, j: Int, value: T): List[List[T]] =
+    mat.updated(j, mat(j).updated(i, value))
+
+  def printGrid[T](grid: List[List[T]], delim: String = ","): Unit =
+    println(grid.map(v => v.mkString(delim)).mkString("\n") + "\n")
+
 }

@@ -1,6 +1,6 @@
 package utils
 
-import utils.IO.readFile
+import utils.IO._
 
 object dayDAY extends App {
 
