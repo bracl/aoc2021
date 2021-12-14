@@ -58,12 +58,6 @@ object day14 extends App {
     loop(polymer, instructions, 1)
   }
 
-  def updateMap[A, B](m: Map[A, B], key: A, value: B): Map[A, B] =
-    m.map({
-      case (k, _) if k == key => (key, value)
-      case (a, b)             => (a, b)
-    })
-
   val res = scanString(startingPoint, instructions1)
   val res2 = scanString(res, instructions1)
   val res3 = scanString(res2, instructions1)

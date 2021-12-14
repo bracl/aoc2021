@@ -18,10 +18,16 @@ object IO {
     strings.map(s => s.toInt)
   }
 
-  def updateMatrix[T](mat: List[List[T]], i: Int, j: Int, value: T): List[List[T]] =
-    mat.updated(j, mat(j).updated(i, value))
+  def updateMatrix[T](mat: List[List[T]], x: Int, y: Int, value: T): List[List[T]] =
+    mat.updated(y, mat(y).updated(x, value))
 
   def printGrid[T](grid: List[List[T]], delim: String = ","): Unit =
     println(grid.map(v => v.mkString(delim)).mkString("\n") + "\n")
+
+  def updateMap[A, B](m: Map[A, B], key: A, value: B): Map[A, B] =
+    m.map({
+      case (k, _) if k == key => (key, value)
+      case (a, b)             => (a, b)
+    })
 
 }
