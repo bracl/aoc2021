@@ -31,11 +31,11 @@ object day13 extends App {
       performFold(dots, foldInstruction.contains("x"), foldInstruction.split("=").last.toInt)
   })
 
-  val grid = (0 to end.maxBy(_._2)._2).toList.map(i => (0 to end.maxBy(_._1)._1).toList.map(_ => " "))
+  val grid = (0 to end.maxBy(_._2)._2).toList.map(i => (0 to end.maxBy(_._1)._1).toList.map(_ => "  "))
 
   val yyy = end.foldLeft(grid)({
     case (grid, (x, y)) =>
-      updateMatrix(grid, x, y, "#")
+      updateMatrix(grid, x, y, "##")
   })
 
   println("Part 2")

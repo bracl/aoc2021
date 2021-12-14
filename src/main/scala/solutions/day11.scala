@@ -86,26 +86,22 @@ object day11 extends App {
 
   def printOcts(o: Octopuses): Unit = println(o.map(v => v.mkString(",")).mkString("\n") + "\n")
 
-//  printOcts(startingOctopuses)
   (1 to 500).foldLeft(
     (startingOctopuses, flashes)
-  ) { (octopuses, day) =>
-    println(s"Starting day $day")
+  ) {
+    case ((dayStartOctopuses, dayStartFlashes), day) =>
+      println(s"Starting day $day")
 
-    val (dayStartOctopuses, dayStartFlashes) = octopuses
+      val increased = dayStartOctopuses.map(row => row.map(_ + 1))
+      val (flashed, theDaysFlashes) = flashDay(increased)
+      val newFlashed = dayStartFlashes + theDaysFlashes
 
-    val increased = dayStartOctopuses.map(row => row.map(_ + 1))
-    val (flashed, theDaysFlashes) = flashDay(increased)
-    val toZeros: Octopuses = flashed
-    val newFlashed = dayStartFlashes + theDaysFlashes
-//    printOcts(toZeros)
-
-    if (day == 100) println(s"Flashes After 100 Days: $newFlashed")
-    if (theDaysFlashes == rows * columns) {
-      println(s"Takes $day to have all Octopuses flash")
-      throw new Exception("Hush child, you've done all you need to...")
-    }
-    (toZeros, newFlashed)
+      if (day == 100) println(s"Flashes After 100 Days: $newFlashed")
+      if (theDaysFlashes == rows * columns) {
+        println(s"Takes $day to have all Octopuses flash")
+        throw new Exception("Hush child, you've done all you need to...")
+      }
+      (flashed, newFlashed)
   }
 
 }
