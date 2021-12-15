@@ -24,6 +24,9 @@ object IO {
   def printGrid[T](grid: List[List[T]], delim: String = ","): Unit =
     println(grid.map(v => v.mkString(delim)).mkString("\n") + "\n")
 
+  def printGrid[T](grid: Vector[Vector[T]]): Unit =
+    printGrid(grid.map(_.toList).toList)
+
   def updateMap[A, B](m: Map[A, B], key: A, value: B): Map[A, B] =
     m.map({
       case (k, _) if k == key => (key, value)
