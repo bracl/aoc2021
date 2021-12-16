@@ -142,7 +142,7 @@ object day16 extends App {
   val hexAsBin: String = BigInt(outerMostPacket, 16).toString(2)
   val manualHex: String = ex3.toList.map(c => lookup(c.toString)).mkString("")
   val mod = 4 - hexAsBin.length % 4
-  val withPadding = if (mod < 4) List.fill(mod)("0").mkString("") + hexAsBin else manualHex
+  val withPadding = if (mod < 4) List.fill(mod)("0").mkString("") + hexAsBin else hexAsBin
   assert(withPadding.length % 4 == 0)
   assert(manualHex.length % 4 == 0)
   val hexPackets = parseOuter(withPadding)._2
