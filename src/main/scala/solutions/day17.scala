@@ -20,6 +20,12 @@ object day17 extends App {
   val maxTargetY = -46
   val minTargetY = -73
 
+  //Victor
+//  val maxTargetX = 250
+//  val minTargetX = 206
+//  val maxTargetY = -57
+//  val minTargetY = -105
+
   val startPosition = (0, 0)
 
   //  The probe's x position increases by its x velocity.

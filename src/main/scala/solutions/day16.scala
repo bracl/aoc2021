@@ -44,25 +44,6 @@ object day16 extends App {
       }
   }
 
-  val lookup = Map(
-    "0" -> "0000",
-    "1" -> "0001",
-    "2" -> "0010",
-    "3" -> "0011",
-    "4" -> "0100",
-    "5" -> "0101",
-    "6" -> "0110",
-    "7" -> "0111",
-    "8" -> "1000",
-    "9" -> "1001",
-    "A" -> "1010",
-    "B" -> "1011",
-    "C" -> "1100",
-    "D" -> "1101",
-    "E" -> "1110",
-    "F" -> "1111"
-  )
-
   def toDecimal(s: String) = BigInt(s, 2).toString(10).toInt
 
   def literalValue(input: String): (String, String) = {
@@ -140,11 +121,9 @@ object day16 extends App {
   }
 
   val hexAsBin: String = BigInt(outerMostPacket, 16).toString(2)
-  val manualHex: String = ex3.toList.map(c => lookup(c.toString)).mkString("")
   val mod = 4 - hexAsBin.length % 4
   val withPadding = if (mod < 4) List.fill(mod)("0").mkString("") + hexAsBin else hexAsBin
   assert(withPadding.length % 4 == 0)
-  assert(manualHex.length % 4 == 0)
   val hexPackets = parseOuter(withPadding)._2
 
   def sumVersions(lv: List[Value]): Int =
