@@ -28,9 +28,6 @@ object IO {
     printGrid(grid.map(_.toList).toList)
 
   def updateMap[A, B](m: Map[A, B], key: A, value: B): Map[A, B] =
-    m.map({
-      case (k, _) if k == key => (key, value)
-      case (a, b)             => (a, b)
-    })
+    m.removed(key).updated(key, value)
 
 }
